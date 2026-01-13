@@ -18,7 +18,8 @@ ChunkStream &RTMPEndpoint::GetChunkStreamInput(uint8_t id)
 // https://www.learncpp.com/cpp-tutorial/struct-aggregate-initialization/
 std::ostream& operator<<(std::ostream& out, const RTMPMediaMessage& m)
 {
-    out << e.id << ' ' << e.age << ' ' << e.wage;
+    // out << e.id << ' ' << e.age << ' ' << e.wage
+    out << "hello";
     return out;
 }
 
