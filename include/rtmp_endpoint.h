@@ -26,6 +26,9 @@ enum class RTMPMessageType {
 /**
 	* Media message from RTMP streamer
 	*/
+// This is an aggregate, so there might be 
+// consequences to adding a method here.
+// ex. aggregate initialization will fail.
 struct RTMPMediaMessage
 {
     RTMPMessageType message_type
@@ -38,6 +41,8 @@ struct RTMPMediaMessage
     rtmp_proto::VideoPacket video;    /**< Video packet. Is only valid, if message_type is VIDEO*/
 };
 
+// the serverreceives
+// rtmp chunks, which are 
 struct ChunkStream
 {
     size_t message_length = 0;

@@ -24,7 +24,7 @@ RTMPMediaMessage RTMPServerSession::GetRTMPMessage()
     uint8_t chunk_stream_id = 0;
     while (true) {
         auto data = m_Endpoint->GetRTMPMessage(&message_type, &message_stream_id, &message_length,
-                                               &chunk_stream_id, &timestamp);
+                                               &chunk_stream_id, &timestamp); // data corresp. to one complete chunk i.e. rpc message.
         switch (message_type) {
         case librtmp::RTMPMessageType::AMF0:
         case librtmp::RTMPMessageType::METADATA_AMF0: {
@@ -42,7 +42,7 @@ RTMPMediaMessage RTMPServerSession::GetRTMPMessage()
         } break;
         case librtmp::RTMPMessageType::VIDEO: {
             RTMPMediaMessage mm;
-            mm.video.Parse(data.data(), message_length);
+            mm.video.Parse(data.data(), message_length); // handle the data in a single RTMP message. This data is
             mm.message_type = message_type;
             mm.message_stream_id = message_stream_id;
             mm.timestamp = timestamp;

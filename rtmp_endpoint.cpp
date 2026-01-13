@@ -15,6 +15,13 @@ ChunkStream &RTMPEndpoint::GetChunkStreamInput(uint8_t id)
     return m_ChunkStreamsInput.at(id);
 }
 
+// https://www.learncpp.com/cpp-tutorial/struct-aggregate-initialization/
+std::ostream& operator<<(std::ostream& out, const RTMPMediaMessage& m)
+{
+    out << e.id << ' ' << e.age << ' ' << e.wage;
+    return out;
+}
+
 //amf functions
 void RTMPEndpoint::SendSerializable(const Serializable *data)
 {
@@ -117,6 +124,8 @@ DATA_BYTES RTMPEndpoint::GetRTMPMessage(RTMPMessageType *message_type,
             cs.chunks_buffer.resize(cs.message_length);
             m_MaxMessageSize = cs.message_length;
         }
+        // keep filling the chunks_buffer till the entire rtmp message
+        // is received.
         auto to_receive_bytes = std::min(cs.message_length - cs.message_bytes_read,
                                          size_t(m_ChunkSizeReceive));
         auto rec_data = m_LowerLevel->receive_data(to_receive_bytes);
